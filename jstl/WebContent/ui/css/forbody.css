@@ -1,0 +1,26 @@
+@charset "EUC-KR";
+
+
+.moon {
+	background-image : url('http://cfile240.uf.daum.net/image/226D363656BDAB862D6358');	
+	background-repeat : no-repeat;
+	background-position : center botton;
+	background-size :cover;
+}
+
+h1.h1bt{
+	margin-bottom : 3%;
+	
+}
+
+.star {
+	margin-top : 15%;
+	padding: 3rem 1.5rem;
+	text-align: center;
+	position: relative;
+    
+    top: 50%;
+	
+	
+	
+}
