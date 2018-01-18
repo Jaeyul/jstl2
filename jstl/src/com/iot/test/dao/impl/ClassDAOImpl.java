@@ -18,10 +18,16 @@ public class ClassDAOImpl implements ClassDAO {
 	@Override
 	public List<ClassInfo> selectClassList(ClassInfo ci) {
 		List<ClassInfo> classList = new ArrayList<ClassInfo>();
-		String sql = "select * from class_info where 1=1";
-		if(ci!=null) {
-			sql += " and ciname like ?";
+		String sql = "select * from class_info where 1=1";		
+		
+		if(ci != null) {
+			sql += " and ";
+			sql += ci.getSearchType();
+			sql += " like ?";					
 		}
+			
+		
+		
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;		
@@ -29,7 +35,7 @@ public class ClassDAOImpl implements ClassDAO {
 			con = DBCon.getCon();
 			ps = con.prepareStatement(sql);
 			if(ci!=null) {
-				ps.setString(1, "%" + ci.getCiName() + "%");				
+				ps.setString(1, "%" + ci.getSearch() + "%");					
 			}
 			rs = ps.executeQuery();
 			while(rs.next()) {

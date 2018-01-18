@@ -7,6 +7,7 @@ import com.iot.test.dao.ClassDAO;
 import com.iot.test.dao.impl.ClassDAOImpl;
 import com.iot.test.service.ClassService;
 import com.iot.test.vo.ClassInfo;
+import com.iot.test.vo.UserInfo;
 
 public class ClassServiceImpl implements ClassService {
 	ClassDAO cdao = new ClassDAOImpl();
@@ -15,14 +16,17 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public void setClassList(HttpServletRequest req) {
 		ClassInfo ci = null;
-		String json = req.getParameter("param");
-		String str = json;
+		String searchStr = req.getParameter("searchStr");
+		String searchType = req.getParameter("searchType");
 		
-		if(json!=null && !json.equals("")) {
-			json = "{ciName :" + json + "}";
-			ci = gs.fromJson(json, ClassInfo.class);			
-			
-		}
+		String str = searchStr;
+		
+		if(searchStr!=null && !searchStr.equals("")) {
+			searchStr = "{search : " + searchStr + ",searchType : " + searchType +"}";
+			ci = gs.fromJson(searchStr, ClassInfo.class);				
+		}		
+		
+		
 		req.setAttribute("String", str);
 		req.setAttribute("classList", cdao.selectClassList(ci));		
 		

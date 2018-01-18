@@ -15,21 +15,30 @@ import com.iot.test.vo.Customer;
 public class CustomerDAOImpl implements CustomerDAO {
 
 	@Override
-	public List<Customer> selectCustomerList(String orderStr, String by) {
+	public List<Customer> selectCustomerList(String orderStr, Customer cu) {
 		List<Customer> customerList = new ArrayList<Customer>();	
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs =null;		
-		String sql = "select * from customer ";	
+		String sql = "select * from customer";	
+	
+		if(cu != null) {			
+			sql += " where ";
+			sql += cu.getSearchType();
+			sql += " like ?";					
+		}
+		
 		if(orderStr != null) {
 			sql += " order by " + orderStr;			
 		}
-		if(by != null) {
-			sql += " " + by;				 
-		}
+		System.out.println(sql);
+		
 		try {
 			con = DBCon.getCon();
 			ps = con.prepareStatement(sql);
+			if(cu!=null) {
+				ps.setString(1, "%" + cu.getSearch() + "%");					
+			}
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				Customer c = new Customer();

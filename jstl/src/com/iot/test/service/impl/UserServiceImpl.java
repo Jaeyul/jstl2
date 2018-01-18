@@ -16,11 +16,12 @@ public class UserServiceImpl implements UserService{
 	public void getUserList(HttpServletRequest req) {
 		
 		UserInfo ui = null;
-		String json = req.getParameter("searchStr");
-		String str = json;
-		if(json!=null && !json.equals("")) {
-			json = "{uiName : "+ json + "}";
-			ui = gs.fromJson(json, UserInfo.class);				
+		String searchStr = req.getParameter("searchStr");
+		String searchType = req.getParameter("searchType");
+		String str = searchStr;
+		if(searchStr!=null && !searchStr.equals("")) {
+			searchStr = "{search : " + searchStr + ",searchType : " + searchType +"}";
+			ui = gs.fromJson(searchStr, UserInfo.class);				
 		}
 		
 		req.setAttribute("String", str);

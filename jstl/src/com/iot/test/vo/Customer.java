@@ -5,7 +5,21 @@ public class Customer {
 	private String customerName;
 	private String city;
 	private String country;
+	private String search;
+	private String searchType;	
 	
+	public String getSearch() {
+		return search;
+	}
+	public void setSearch(String search) {
+		this.search = search;
+	}
+	public String getSearchType() {
+		return searchType;
+	}
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
+	}
 	public int getCustomerId() {
 		return customerId;
 	}

@@ -27,6 +27,7 @@ public class JspServlet extends HttpServlet {
 	private UserService us = new UserServiceImpl();
 	private MenuService ms = new MenuServiceImpl();
 	private ClassService cs = new ClassServiceImpl();
+	private CustomerService cus = new CustomerServiceImpl();
 	
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -67,10 +68,12 @@ public class JspServlet extends HttpServlet {
 			cs.setClassList(req);
 			uri = "/view/class/list";
 		}
-		else if(uri.indexOf("/customer/list")!= -1) {
-			CustomerService cs = new CustomerServiceImpl();
-			cs.setCustomerList(req);
-		}		
+		else if(uri.indexOf("/customer/list")!= -1) {			
+			cus.setCustomerList(req);
+		}else if(uri.indexOf("/customer/search")!= -1) {			
+			cus.setCustomerList(req);
+			uri = "/view/customer/list";
+		}			
 		
 		
 		System.out.println("최종 URI : " + uri);

@@ -10,7 +10,21 @@ public class UserInfo {
 	private int ciNo;
 	private String uiRegdate;
 	private String address;
+	private String search;
+	private String searchType;
 	
+	public String getSearchType() {
+		return searchType;
+	}
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
+	}
+	public String getSearch() {
+		return search;
+	}
+	public void setSearch(String search) {
+		this.search = search;
+	}
 	public int getUiNo() {
 		return uiNo;
 	}

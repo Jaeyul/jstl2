@@ -14,10 +14,10 @@
 <%
 // String root = request.getContextPath();
 List<ClassInfo> classList = (List<ClassInfo>) request.getAttribute("classList");
-String str = (String) request.getAttribute("String");
+/* String str = (String) request.getAttribute("String");
 if(str == null){
 	str = "";	
-}
+} */
 
 %>
 
@@ -37,12 +37,23 @@ if(str == null){
 	</c:forEach>
 </table>
 
-<form action="<%=root %>/view/class/search">
-	<input type="text" id=search  name="param" value="<%=str%>"><input type="submit" value="검색" >	
+<form action="<%=root %>/view/class/search" onsubmit="return checkValue()">
+	<select name="searchType" id="searchType">
+		<option value="">선택</option>
+		<option value="ciName"${param.searchType eq 'ciName' ? 'selected' : "" }>반이름</option>
+		<option value="ciDesc"${param.searchType eq 'ciDesc' ? 'selected' : "" }>상세정보</option>	
+	</select>
+	<input type="text" id=searchStr  name="searchStr" value="${String }"><input type="submit" value="검색" >	
 </form>
 </body>
-
-
-
-
+<script>
+function checkValue(){
+	var sBox = document.getElementById("searchType").value;
+	if(sBox.length == 0){
+		alert("체크박스를 선택해주세요!");		
+		return false;		
+	}	
+	return true;	
+}
+</script>
 </html>

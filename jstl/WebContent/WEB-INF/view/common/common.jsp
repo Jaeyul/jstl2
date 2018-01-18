@@ -7,8 +7,16 @@ String root = request.getContextPath();
 %>
 
 <c:set var="root" value="<%=root%>" />
+
+
 <c:forEach items="${menuList}" var="menu">
-	<a href="${root }${menu.mUrl}">${menu.mName}</a>
+	<c:choose>	         
+		<c:when test = "${menu.mName eq 'MenuList'}">
+		</c:when>		
+		<c:otherwise>
+			<a href="${root}${menu.mUrl}">${menu.mName}</a> 
+		</c:otherwise>
+	</c:choose>
 </c:forEach>
 
 

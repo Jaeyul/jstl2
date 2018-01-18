@@ -18,9 +18,14 @@ public class UserDAOImpl implements UserDAO{
 	public List<UserInfo> selectUserList(UserInfo ui) {
 		List<UserInfo> userList = new ArrayList<UserInfo>();
 		String sql = "select * from user_info where 1=1";
-		if(ui!=null) {
-			sql += " and uiname like ?";
+		
+		if(ui != null) {
+			sql += " and ";
+			sql += ui.getSearchType();
+			sql += " like ?";					
 		}
+			
+		
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;		
@@ -28,7 +33,7 @@ public class UserDAOImpl implements UserDAO{
 			con = DBCon.getCon();
 			ps = con.prepareStatement(sql);
 			if(ui!=null) {
-				ps.setString(1, "%" + ui.getUiName() + "%");				
+				ps.setString(1, "%" + ui.getSearch() + "%");				
 			}
 			rs = ps.executeQuery();
 			while(rs.next()) {

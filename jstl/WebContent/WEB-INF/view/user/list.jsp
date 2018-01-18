@@ -12,24 +12,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<script>
-
-
-</script>
-
-
-
 
 
 
 <body>
 <%
-//String root = request.getContextPath();
+/* String root = request.getContextPath();
 List<UserInfo> userList = (List<UserInfo>) request.getAttribute("userList");
 String str = (String) request.getAttribute("String");
 if(str == null){
 	str = "";	
-}
+} */
 %>
 
 <br>유저리스트<br>
@@ -53,18 +46,27 @@ if(str == null){
 </table>
 
 <form action="<%=root %>/view/user/search" onsubmit="return checkValue()">
-	<select name="searchType">
+	<select name="searchType" id="searchType">
 		<option value="">선택</option>
-		<option value="uiName">이름</option>
-		<option value="uiAge">나이</option>
-		<option value="uiId">아이디</option>
-		<option value="address">주소</option>
+		<option value="uiName"${param.searchType eq 'uiName' ? 'selected' : "" }>이름</option>
+		<option value="uiAge"${param.searchType eq 'uiAge' ? 'selected' : "" }>나이</option>
+		<option value="uiId"${param.searchType eq 'uiId' ? 'selected' : "" }>아이디</option>
+		<option value="address"${param.searchType eq 'address' ? 'selected' : "" }>주소</option>
 	</select>
-	<input type="text" name="searchStr" value="<%=str%>"><input type="submit" value="검색">
+	<input type="text" id="searchStr" name="searchStr" value="${String}"><input type="submit" value="검색">
 </form>
-
-
-
-
 </body>
+
+<script>
+function checkValue(){
+	var sBox = document.getElementById("searchType").value;
+	if(sBox.length == 0){
+		alert("체크박스를 선택해주세요!");		
+		return false;		
+	}	
+	return true;	
+}
+</script>
+
+
 </html>
