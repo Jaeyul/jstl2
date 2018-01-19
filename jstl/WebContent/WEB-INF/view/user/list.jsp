@@ -28,22 +28,43 @@ if(str == null){
 <br>유저리스트<br>
 
 
+  	
 <table border='1'>
 	<tr>
+		<th>번호</th>
 		<th>이름</th>
 		<th>나이</th>
 		<th>ID</th>
-		<th>주소</th>
+		<th>주소</th>			
+		<th>가입일시</th>
+		<th>설정</th>
+	</tr>		
+	
+	
+	<c:forEach items="${userList}" var="ui">
+	<form action="<%=root %>/user/revise">
+	<tr>	
+		<td><input type="text" value="${ui.uiNo }" id="uiNo" name="uiNo"></td>
+		<td><input type="text" value="${ui.uiName }" id="uiName" name="uiName"></td>		
+		<td><input type="text" value="${ui.uiAge }" id="uiAge" name="uiAge"></td>
+		<td><input type="text" value="${ui.uiId }" id="uiId" name="uiId"></td>
+		<td><input type="text" value="${ui.address }" id="address" name="address"></td>			
+		<td>${ui.uiRegdate }</td>	
+		<td><input type="submit" name="catch" value="update"><input type="submit" name="catch" value="delete"></td>	
 	</tr>
-	<c:forEach items="${userList}" var="ui">	
-	<tr>
-		<td>${ui.uiName }</td>
-		<td>${ui.uiAge }</td>
-		<td>${ui.uiId }</td>
-		<td>${ui.address }</td>			
-	</tr>
-	</c:forEach>
+	<input type="hidden" name="catchValue" value="${uiNo },${uiName},${uiAge},${uiId},${address}">
+	<input type="hidden" name="catchType" value="uiNo,uiName,uiAge,uiId,address">
+	</form>	
+	</c:forEach>	
+	
+	
 </table>
+
+ 	
+
+
+
+
 
 <form action="<%=root %>/view/user/search" onsubmit="return checkValue()">
 	<select name="searchType" id="searchType">
@@ -55,6 +76,10 @@ if(str == null){
 	</select>
 	<input type="text" id="searchStr" name="searchStr" value="${String}"><input type="submit" value="검색">
 </form>
+
+
+
+
 </body>
 
 <script>

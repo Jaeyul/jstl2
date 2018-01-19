@@ -49,8 +49,8 @@ public class JspServlet extends HttpServlet {
 		String uri = req.getRequestURI();
 		String root = req.getContextPath();
 		
-		System.out.println("URI : " + uri);
-		System.out.println("ContextRoot : " + root);		
+//		System.out.println("URI : " + uri);
+//		System.out.println("ContextRoot : " + root);		
 		uri = uri.replace(root, "");
 		ms.setMenuList(req);
 		if(uri.indexOf("/user/list")!= -1) {			
@@ -76,7 +76,7 @@ public class JspServlet extends HttpServlet {
 		}			
 		
 		
-		System.out.println("최종 URI : " + uri);
+//		System.out.println("최종 URI : " + uri);
 		uri = "/WEB-INF" + uri + ".jsp";
 		RequestDispatcher rd = req.getRequestDispatcher(uri);
 //		req.setAttribute("test", "나도 보이나요?");

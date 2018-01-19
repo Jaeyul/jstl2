@@ -11,7 +11,7 @@ String root = request.getContextPath();
 
 <c:forEach items="${menuList}" var="menu">
 	<c:choose>	         
-		<c:when test = "${menu.mName eq 'MenuList'}">
+		<c:when test = "${menu.mName eq 'MenuList'}">		
 		</c:when>		
 		<c:otherwise>
 			<a href="${root}${menu.mUrl}">${menu.mName}</a> 

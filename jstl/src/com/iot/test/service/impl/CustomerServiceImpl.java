@@ -42,7 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
 			orderStr = orderTarget + orderStr;
 		}
 		
-		Customer cu = null;
+		Customer cu = null;		
 		String searchStr = req.getParameter("searchStr");
 		String searchType = req.getParameter("searchType");		
 		String str = searchStr;		

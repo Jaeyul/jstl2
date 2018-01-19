@@ -9,7 +9,7 @@ import com.iot.test.service.UserService;
 import com.iot.test.vo.UserInfo;
 
 public class UserServiceImpl implements UserService{
-	UserDAO udao = new UserDAOImpl();
+	private UserDAO udao = new UserDAOImpl();
 	Gson gs = new Gson();
 
 	@Override
@@ -31,19 +31,34 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public void gerUser(HttpServletRequest req) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void insertUser(HttpServletRequest req) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void updateUser(HttpServletRequest req) {
-		// TODO Auto-generated method stub
+		UserInfo ui = null;
+		String catchValue = req.getParameter("catchValue");
+		String[] catchValues = catchValue.split(",");
+		String catchType = req.getParameter("catchType");
+		String[] catchTypes = catchType.split(",");
+		String json = "{";
+		for(int i=0; i<catchTypes.length; i++) {
+			json += catchTypes[i] + " : " + catchValues[i] ;			
+			if(i != catchTypes.length -1) {
+				json +=	",";				
+			}
+		}
+		json = "}";
+		
+		ui = gs.fromJson(json, UserInfo.class);		
+		int result = udao.updateUser(ui);	
 		
 	}
 

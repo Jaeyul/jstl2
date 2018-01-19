@@ -45,6 +45,7 @@ public class UserDAOImpl implements UserDAO{
 				ui2.setUiAge(rs.getInt("uiage"));
 				ui2.setUiRegdate(rs.getString("uiregdate"));
 				ui2.setAddress(rs.getString("address"));
+				ui2.setCiNo(rs.getInt("cino"));
 				userList.add(ui2);			
 			}			
 			
