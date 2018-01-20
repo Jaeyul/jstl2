@@ -66,20 +66,80 @@ public class UserDAOImpl implements UserDAO{
 
 	@Override
 	public int insertUser(UserInfo ui) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "insert into user_info(uiName,uiAge,uiId,uiPwd,address,cino,uiregdate) ";
+		sql += " values(?,?,?,?,?,?,now())";
+		Connection con =null;
+		PreparedStatement ps = null;	
+		int result = 0;
+		
+		try {
+			con = DBCon.getCon();
+			ps = con.prepareStatement(sql);
+			
+			ps.setString(1, ui.getUiName());
+			ps.setInt(2, ui.getUiAge());
+			ps.setString(3, ui.getUiId());
+			ps.setString(4, ui.getUiPwd());
+			ps.setString(5, ui.getAddress());
+			ps.setInt(6, ui.getCiNo());	
+			
+			result = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
 	public int updateUser(UserInfo ui) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "update user_info set uiName=?, uiAge=?, uiId=?, address=? where uiNo=?" ;
+		Connection con =null;
+		PreparedStatement ps = null;	
+		int result = 0;
+		
+		try {
+			con = DBCon.getCon();
+			ps = con.prepareStatement(sql);	
+			ps.setString(1, ui.getUiName());
+			ps.setInt(2, ui.getUiAge());
+			ps.setString(3, ui.getUiId());
+			ps.setString(4, ui.getAddress());
+			ps.setInt(5, ui.getUiNo());
+			
+			result = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
 	public int deleteUser(UserInfo ui) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "delete from user_info where uiNo=?" ;
+		Connection con =null;
+		PreparedStatement ps = null;	
+		int result = 0;
+		
+		try {
+			con = DBCon.getCon();
+			ps = con.prepareStatement(sql);	
+			
+			ps.setInt(1, ui.getUiNo());
+			
+			result = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 }

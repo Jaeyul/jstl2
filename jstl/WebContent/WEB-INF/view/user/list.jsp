@@ -1,3 +1,5 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
 <%@page import="com.iot.test.vo.UserInfo"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -15,15 +17,8 @@
 
 
 
-<body>
-<%
-/* String root = request.getContextPath();
-List<UserInfo> userList = (List<UserInfo>) request.getAttribute("userList");
-String str = (String) request.getAttribute("String");
-if(str == null){
-	str = "";	
-} */
-%>
+<body onload="forAlert()">
+
 
 <br>유저리스트<br>
 
@@ -41,27 +36,29 @@ if(str == null){
 	</tr>		
 	
 	
-	<c:forEach items="${userList}" var="ui">
+	<c:forEach items="${userList}" var="ui" varStatus="status">
 	<form action="<%=root %>/user/revise">
-	<tr>	
+	<tr class="tr${status.index }">	
 		<td><input type="text" value="${ui.uiNo }" id="uiNo" name="uiNo"></td>
 		<td><input type="text" value="${ui.uiName }" id="uiName" name="uiName"></td>		
 		<td><input type="text" value="${ui.uiAge }" id="uiAge" name="uiAge"></td>
 		<td><input type="text" value="${ui.uiId }" id="uiId" name="uiId"></td>
 		<td><input type="text" value="${ui.address }" id="address" name="address"></td>			
 		<td>${ui.uiRegdate }</td>	
-		<td><input type="submit" name="catch" value="update"><input type="submit" name="catch" value="delete"></td>	
+		<td><input type="submit" name="catch" value="update" id="${status.index }" onclick="addValue(id)">
+			<input type="submit" name="catch" value="delete" id="${status.index }" onclick="addValue(id)">
+		</td>	
 	</tr>
-	<input type="hidden" name="catchValue" value="${uiNo },${uiName},${uiAge},${uiId},${address}">
+	<input type="hidden" name="catchValue" id="catchValue${status.index }" value="">
 	<input type="hidden" name="catchType" value="uiNo,uiName,uiAge,uiId,address">
 	</form>	
-	</c:forEach>	
-	
-	
+	</c:forEach>		
 </table>
 
  	
-
+<form action="<%=root %>/view/user/insert">
+	<input type="submit" value="Sign-up">
+</form>
 
 
 
@@ -81,6 +78,29 @@ if(str == null){
 
 
 </body>
+<%
+/* String root = request.getContextPath();
+List<UserInfo> userList = (List<UserInfo>) request.getAttribute("userList");
+String str = (String) request.getAttribute("String");
+if(str == null){
+	str = "";	
+} */
+
+String msg = "";
+
+if(request.getAttribute("msg") != null){
+	HashMap<String, String> hm = (HashMap<String, String>) request.getAttribute("msg");
+	
+	if(hm != null){
+	msg = hm.get("msg");	
+	}
+	
+}
+
+
+%>
+
+
 
 <script>
 function checkValue(){
@@ -91,6 +111,23 @@ function checkValue(){
 	}	
 	return true;	
 }
+
+function addValue(id){
+	var str = "tr.tr" + id + " td input[type=text]";
+	//alert(str);
+	var str2 = "catchValue"+ id;
+	var values = $(str);
+	for(var v of values){
+		//alert(v.value);
+		document.getElementById(str2).value += v.value + ",";
+	}
+	
+	alert(document.getElementById(str2).value);
+}
+
+
+
+
 </script>
 
 

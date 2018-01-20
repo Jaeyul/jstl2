@@ -60,6 +60,10 @@ public class JspServlet extends HttpServlet {
 			us.getUserList(req);
 			uri = "/view/user/list";
 		}
+		else if(uri.indexOf("/user/insert")!= -1) {			
+			cs.setClassList(req);			
+		}
+		
 		else if(uri.indexOf("/class/list")!= -1) {			
 			cs.setClassList(req);
 			

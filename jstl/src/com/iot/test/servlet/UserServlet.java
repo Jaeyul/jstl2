@@ -41,24 +41,23 @@ public class UserServlet extends HttpServlet {
 //		System.out.println("ContextRoot : " + root);		
 		uri = uri.replace(root, "");
 		ms.setMenuList(req);
-		
-		if(uri.indexOf("revise")!= -1) {	
-			
-			String catchStr = req.getParameter("catch");
-			
-			System.out.println(catchStr);
-			
-			if(catchStr.equals("update")) {				
-				
-			}else {				
-				
-			}
-			System.out.println(catchValue);
-			uri = "/user/list";
-			
+		if(uri.indexOf("insert")!= -1) {
+			us.insertUser(req);
+			uri = "/user/list";	
 		}
 		
-		uri = "/WEB-INF/view" + uri + ".jsp";
+		
+		if(uri.indexOf("revise")!= -1) {			
+			String catchStr = req.getParameter("catch");						
+			if(catchStr.equals("update")) {				
+				us.updateUser(req);				
+			}else {				
+				us.deleteUser(req);
+			}			
+			uri = "/user/list";			
+		}
+		
+		uri = "/view" + uri;
 		RequestDispatcher rd = req.getRequestDispatcher(uri);
 		rd.forward(req, res);		
 		
