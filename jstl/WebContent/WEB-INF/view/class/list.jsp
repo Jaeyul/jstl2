@@ -26,16 +26,30 @@ if(str == null){
 
 <table border='1'>
 	<tr>
+		<th>번호</th>
 		<th>이름</th>
 		<th>나이</th>
 	</tr>
-	<c:forEach items="${classList}" var="ci">	
-	<tr>
-		<td>${ci.ciName }</td>
-		<td>${ci.ciDesc }</td>		
+	<c:forEach items="${classList}" var="ci" varStatus="status">
+	<form action="<%=root %>/class/revise">	
+	<tr class="tr${status.index }">
+		<td><input type="text" value="${ci.ciNo }" id="ciNo" name="ciNo"></td>
+		<td><input type="text" value="${ci.ciName }" id="ciName" name="ciName"></td>
+		<td><input type="text" value="${ci.ciDesc }" id="ciDesc" name="ciDesc"></td>
+		<td><input type="submit" name="catch" value="update" id="${status.index }" onclick="addValue(id)">
+			<input type="submit" name="catch" value="delete" id="${status.index }" onclick="addValue(id)">
+		</td>			
 	</tr>
+		<input type="hidden" name="catchValue" id="catchValue${status.index }" value="">
+		<input type="hidden" name="catchType" id="catchType${status.index }" value="ciNo,ciName,ciDesc">
+	</form>
 	</c:forEach>
 </table>
+
+<form action="<%=root %>/view/class/insert">
+	<input type="submit" value="Open">
+</form>
+
 
 <form action="<%=root %>/view/class/search" onsubmit="return checkValue()">
 	<select name="searchType" id="searchType">
@@ -45,6 +59,9 @@ if(str == null){
 	</select>
 	<input type="text" id=searchStr  name="searchStr" value="${String }"><input type="submit" value="검색" >	
 </form>
+
+
+
 </body>
 <script>
 function checkValue(){
@@ -55,5 +72,19 @@ function checkValue(){
 	}	
 	return true;	
 }
+
+function addValue(id){
+	var str = "tr.tr" + id + " td input[type=text]";
+	//alert(str);	
+	var values = $(str);
+	
+	var catchValueStr = "catchValue"+ id;
+	for(var v of values){
+		//alert(v.value);
+		document.getElementById(catchValueStr).value += v.value + ",";
+	}	
+	alert(document.getElementById(catchValueStr).value);	
+}
+
 </script>
 </html>

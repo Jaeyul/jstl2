@@ -1,5 +1,8 @@
 package com.iot.test.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.google.gson.Gson;
@@ -31,6 +34,89 @@ public class ClassServiceImpl implements ClassService {
 		req.setAttribute("classList", cdao.selectClassList(ci));		
 		
 
+	}
+
+	@Override
+	public void insertClass(HttpServletRequest req) {
+		ClassInfo ci = null;
+		String ciName = req.getParameter("ciName");		
+		String ciDesc = req.getParameter("ciDesc");
+		
+	
+		String json = "{" ;
+		json += "ciName:" + ciName +",";
+		json += "ciDesc:" + ciDesc ;
+		
+		json += "}";
+		
+		
+		System.out.println(json);
+		ci = gs.fromJson(json, ClassInfo.class);		
+		int result = cdao.insertClass(ci);			
+		
+		Map<String, String> hm = new HashMap<String, String>();
+		hm.put("msg", "회원가입에 실패했습니다.");
+		if(result != 0) {
+			hm.put("msg", "회원가입되었습니다.");
+		}		
+		req.setAttribute("msg", hm);	
+		
+	}
+
+	@Override
+	public void updateClass(HttpServletRequest req) {
+		ClassInfo ci = null;
+		String catchValue = req.getParameter("catchValue");
+		String[] catchValues = catchValue.split(",");
+		
+		for(String v : catchValues) {
+			System.out.println("실험 : " + v);			
+		}
+		
+		String catchType = req.getParameter("catchType");
+		String[] catchTypes = catchType.split(",");
+		
+		String json = "{";
+		for(int i=0; i<catchTypes.length; i++) {
+			json += catchTypes[i] + " : " + catchValues[i] ;			
+			if(i != catchTypes.length -1) {
+				json +=	",";				
+			}
+		}
+		json += "}";
+		
+		System.out.println(json);
+		ci = gs.fromJson(json, ClassInfo.class);		
+		int result = cdao.updateClass(ci);	
+		
+	}
+
+	@Override
+	public void deleteClass(HttpServletRequest req) {
+		ClassInfo ci = null;
+		String catchValue = req.getParameter("catchValue");
+		String[] catchValues = catchValue.split(",");
+		
+		for(String v : catchValues) {
+			System.out.println("실험 : " + v);			
+		}
+		
+		String catchType = req.getParameter("catchType");
+		String[] catchTypes = catchType.split(",");
+		
+		String json = "{";
+		for(int i=0; i<catchTypes.length; i++) {
+			json += catchTypes[i] + " : " + catchValues[i] ;			
+			if(i != catchTypes.length -1) {
+				json +=	",";				
+			}
+		}
+		json += "}";
+		
+		System.out.println(json);
+		ci = gs.fromJson(json, ClassInfo.class);		
+		int result = cdao.deleteClass(ci);	
+		
 	}
 
 }

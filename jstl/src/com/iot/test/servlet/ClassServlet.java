@@ -8,14 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.iot.test.service.ClassService;
 import com.iot.test.service.MenuService;
-import com.iot.test.service.UserService;
+import com.iot.test.service.impl.ClassServiceImpl;
 import com.iot.test.service.impl.MenuServiceImpl;
-import com.iot.test.service.impl.UserServiceImpl;
 
-public class UserServlet extends HttpServlet {
-	private UserService us = new UserServiceImpl();
+public class ClassServlet extends HttpServlet{
 	private MenuService ms = new MenuServiceImpl();	
+	private ClassService cs = new ClassServiceImpl();
 	
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -42,25 +42,24 @@ public class UserServlet extends HttpServlet {
 		uri = uri.replace(root, "");
 		ms.setMenuList(req);
 		if(uri.indexOf("insert")!= -1) {
-			us.insertUser(req);
-			uri = "/user/list";	
-		}		
+			cs.insertClass(req);
+			uri = "/class/list";	
+		}	
+		
 		if(uri.indexOf("revise")!= -1) {			
 			String catchStr = req.getParameter("catch");						
 			if(catchStr.equals("update")) {				
-				us.updateUser(req);				
+				cs.updateClass(req);				
 			}else {				
-				us.deleteUser(req);
+				cs.deleteClass(req);
 			}			
-			uri = "/user/list";			
+			uri = "/class/list";			
 		}
 		
 		uri = "/view" + uri;
 		RequestDispatcher rd = req.getRequestDispatcher(uri);
 		rd.forward(req, res);		
 		
-		
 	}
-	
 
 }

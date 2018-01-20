@@ -61,4 +61,78 @@ public class CustomerDAOImpl implements CustomerDAO {
 		return customerList;
 	}
 
+	@Override
+	public int insertCustomer(Customer ct) {
+		String sql = "insert into customer(customerName,city,country) ";
+		sql += " values(?,?,?)";
+		Connection con =null;
+		PreparedStatement ps = null;	
+		int result = 0;
+		
+		try {
+			con = DBCon.getCon();
+			ps = con.prepareStatement(sql);
+			
+			ps.setString(1, ct.getCustomerName());			
+			ps.setString(2, ct.getCity());
+			ps.setString(3, ct.getCountry());		
+			
+			result = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int updateCustomer(Customer ct) {
+		String sql = "update customer set customerName=?, city=?, country=? where customerId=?" ;
+		Connection con =null;
+		PreparedStatement ps = null;	
+		int result = 0;
+		
+		try {
+			con = DBCon.getCon();
+			ps = con.prepareStatement(sql);	
+			ps.setString(1, ct.getCustomerName());			
+			ps.setString(2, ct.getCity());
+			ps.setString(3, ct.getCountry());
+			ps.setInt(4, ct.getCustomerId());
+			
+			result = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int deleteCustomer(Customer ct) {
+		String sql = "delete from customer where customerId=?" ;
+		Connection con =null;
+		PreparedStatement ps = null;	
+		int result = 0;
+		
+		try {
+			con = DBCon.getCon();
+			ps = con.prepareStatement(sql);	
+			
+			ps.setInt(1, ct.getCustomerId());
+			
+			result = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
 }

@@ -50,7 +50,7 @@
 		</td>	
 	</tr>
 	<input type="hidden" name="catchValue" id="catchValue${status.index }" value="">
-	<input type="hidden" name="catchType" value="uiNo,uiName,uiAge,uiId,address">
+	<input type="hidden" name="catchType" id="catchType${status.index }" value="uiNo,uiName,uiAge,uiId,address">
 	</form>	
 	</c:forEach>		
 </table>
@@ -114,15 +114,15 @@ function checkValue(){
 
 function addValue(id){
 	var str = "tr.tr" + id + " td input[type=text]";
-	//alert(str);
-	var str2 = "catchValue"+ id;
+	//alert(str);	
 	var values = $(str);
+	
+	var catchValueStr = "catchValue"+ id;
 	for(var v of values){
 		//alert(v.value);
-		document.getElementById(str2).value += v.value + ",";
-	}
-	
-	alert(document.getElementById(str2).value);
+		document.getElementById(catchValueStr).value += v.value + ",";
+	}	
+	alert(document.getElementById(catchValueStr).value);	
 }
 
 

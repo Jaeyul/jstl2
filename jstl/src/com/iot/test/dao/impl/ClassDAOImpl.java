@@ -55,4 +55,76 @@ public class ClassDAOImpl implements ClassDAO {
 		return classList;
 	}
 
+	@Override
+	public int insertClass(ClassInfo ci) {
+		String sql = "insert into class_info(ciName,ciDesc) ";
+		sql += " values(?,?)";
+		Connection con =null;
+		PreparedStatement ps = null;	
+		int result = 0;
+		
+		try {
+			con = DBCon.getCon();
+			ps = con.prepareStatement(sql);
+			
+			ps.setString(1, ci.getCiName());
+			ps.setString(2, ci.getCiDesc());			
+			
+			result = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int updateClass(ClassInfo ci) {
+		String sql = "update class_info set ciName=?, ciDesc=? where ciNo=?" ;
+		Connection con =null;
+		PreparedStatement ps = null;	
+		int result = 0;
+		
+		try {
+			con = DBCon.getCon();
+			ps = con.prepareStatement(sql);	
+			ps.setString(1, ci.getCiName());			
+			ps.setString(2, ci.getCiDesc());
+			ps.setInt(3, ci.getCiNo());
+			
+			result = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int deleteClass(ClassInfo ci) {
+		String sql = "delete from class_info where ciNo=?" ;
+		Connection con =null;
+		PreparedStatement ps = null;	
+		int result = 0;
+		
+		try {
+			con = DBCon.getCon();
+			ps = con.prepareStatement(sql);	
+			
+			ps.setInt(1, ci.getCiNo());
+			
+			result = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
 }

@@ -74,6 +74,7 @@ public class JspServlet extends HttpServlet {
 		}
 		else if(uri.indexOf("/customer/list")!= -1) {			
 			cus.setCustomerList(req);
+			
 		}else if(uri.indexOf("/customer/search")!= -1) {			
 			cus.setCustomerList(req);
 			uri = "/view/customer/list";

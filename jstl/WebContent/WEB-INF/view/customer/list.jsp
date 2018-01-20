@@ -28,15 +28,26 @@
 			<td colspan="4" align="center">고객리스트가 없습니다.</td>
 		</tr>
 	</c:if>
-	<c:forEach items="${customerList}" var="customer">
-		<tr>
-			<td>${customer.customerId }</td>
-			<td>${customer.customerName}</td>
-			<td>${customer.city }</td>
-			<td>${customer.country }</td>
+	<c:forEach items="${customerList}" var="customer" varStatus="status">
+	<form action="<%=root %>/customer/revise">
+		<tr class="tr${status.index }">
+			<td><input type="text" value="${customer.customerId }" id="customerId" name="customerId"></td>
+			<td><input type="text" value="${customer.customerName}" id="customerName" name="customerName"></td>
+			<td><input type="text" value="${customer.city }" id="city" name="city"></td>
+			<td><input type="text" value="${customer.country }" id="country" name="country"></td>
+			<td><input type="submit" name="catch" value="update" id="${status.index }" onclick="addValue(id)">
+			<input type="submit" name="catch" value="delete" id="${status.index }" onclick="addValue(id)"></td>					
 		</tr>	
+		<input type="hidden" name="catchValue" id="catchValue${status.index }" value="">
+		<input type="hidden" name="catchType" id="catchType${status.index }" value="customerId,customerName,city,country">
+	</form>	
 	</c:forEach>	
 </table>
+
+<form action="<%=root %>/view/customer/insert">
+	<input type="submit" value="Register">
+</form>
+
 <form action="<%=root %>/view/customer/search" onsubmit="return checkValue()">
 	<select name="searchType" id="searchType">
 		<option value="">선택</option>
@@ -58,5 +69,19 @@ function checkValue(){
 	}	
 	return true;	
 }
+
+function addValue(id){
+	var str = "tr.tr" + id + " td input[type=text]";
+	//alert(str);	
+	var values = $(str);
+	
+	var catchValueStr = "catchValue"+ id;
+	for(var v of values){
+		//alert(v.value);
+		document.getElementById(catchValueStr).value += v.value + ",";
+	}	
+	alert(document.getElementById(catchValueStr).value);	
+}
+
 </script>
 </html>
