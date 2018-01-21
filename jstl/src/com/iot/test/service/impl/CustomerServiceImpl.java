@@ -38,13 +38,10 @@ public class CustomerServiceImpl implements CustomerService {
 			if(orderTarget.indexOf("asc") != -1) {
 				orderTarget = orderTarget.replace("asc", "desc");
 			}else {
-				orderTarget = orderTarget.replace("desc", "asc");
-				
-				
+				orderTarget = orderTarget.replace("desc", "asc");				
 			}
 			orderStr = orderTarget + orderStr;
-		}
-		
+		}		
 		Customer cu = null;		
 		String searchStr = req.getParameter("searchStr");
 		String searchType = req.getParameter("searchType");		

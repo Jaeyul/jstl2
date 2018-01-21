@@ -1,19 +1,22 @@
 package com.iot.test.service.impl;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.google.gson.Gson;
 import com.iot.test.dao.ClassDAO;
+import com.iot.test.dao.UserDAO;
 import com.iot.test.dao.impl.ClassDAOImpl;
+import com.iot.test.dao.impl.UserDAOImpl;
 import com.iot.test.service.ClassService;
 import com.iot.test.vo.ClassInfo;
 import com.iot.test.vo.UserInfo;
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 public class ClassServiceImpl implements ClassService {
 	ClassDAO cdao = new ClassDAOImpl();
+	UserDAO udao = new UserDAOImpl();
 	Gson gs =new Gson();
 
 	@Override
@@ -54,28 +57,22 @@ public class ClassServiceImpl implements ClassService {
 		ci = gs.fromJson(json, ClassInfo.class);		
 		int result = cdao.insertClass(ci);			
 		
-		Map<String, String> hm = new HashMap<String, String>();
-		hm.put("msg", "회원가입에 실패했습니다.");
+		String msg = "반개설에 실패했습니다.";
 		if(result != 0) {
-			hm.put("msg", "회원가입되었습니다.");
-		}		
-		req.setAttribute("msg", hm);	
+			msg = "반개설에 성공했습니다.";			
+		}
+		
+		req.setAttribute("msg", msg);
 		
 	}
 
 	@Override
 	public void updateClass(HttpServletRequest req) {
 		ClassInfo ci = null;
-		String catchValue = req.getParameter("catchValue");
-		String[] catchValues = catchValue.split(",");
-		
-		for(String v : catchValues) {
-			System.out.println("실험 : " + v);			
-		}
-		
+		String catchValue = req.getParameter("catchValue");		
+		String[] catchValues = catchValue.split(",");			
 		String catchType = req.getParameter("catchType");
-		String[] catchTypes = catchType.split(",");
-		
+		String[] catchTypes = catchType.split(",");		
 		String json = "{";
 		for(int i=0; i<catchTypes.length; i++) {
 			json += catchTypes[i] + " : " + catchValues[i] ;			
@@ -89,18 +86,20 @@ public class ClassServiceImpl implements ClassService {
 		ci = gs.fromJson(json, ClassInfo.class);		
 		int result = cdao.updateClass(ci);	
 		
+		String msg = "수정에 실패했습니다.";
+		if(result != 0) {
+			msg = "수정에 성공했습니다.";			
+		}
+		
+		req.setAttribute("msg", msg);
+		
 	}
 
 	@Override
 	public void deleteClass(HttpServletRequest req) {
 		ClassInfo ci = null;
 		String catchValue = req.getParameter("catchValue");
-		String[] catchValues = catchValue.split(",");
-		
-		for(String v : catchValues) {
-			System.out.println("실험 : " + v);			
-		}
-		
+		String[] catchValues = catchValue.split(",");				
 		String catchType = req.getParameter("catchType");
 		String[] catchTypes = catchType.split(",");
 		
@@ -111,12 +110,22 @@ public class ClassServiceImpl implements ClassService {
 				json +=	",";				
 			}
 		}
-		json += "}";
-		
+		json += "}";		
 		System.out.println(json);
 		ci = gs.fromJson(json, ClassInfo.class);		
-		int result = cdao.deleteClass(ci);	
-		
+		int result = cdao.deleteClass(ci);			
+		String msg = "삭제에 실패했습니다.";
+		if(result == 0) {
+			UserInfo ui = new UserInfo();
+			ui.setCiNo(ci.getCiNo());
+			UserInfo ciEqUi = udao.selectUser(ui);
+			if(ciEqUi != null) {
+				msg = "반에 학생이 있어요. 삭제가 실패했습니다.";				
+			}			
+		}else {				
+			msg = "삭제에 성공했습니다.";	
+		}		
+		req.setAttribute("msg", msg);		
 	}
 
 }

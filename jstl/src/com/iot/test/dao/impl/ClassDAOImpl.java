@@ -24,10 +24,7 @@ public class ClassDAOImpl implements ClassDAO {
 			sql += " and ";
 			sql += ci.getSearchType();
 			sql += " like ?";					
-		}
-			
-		
-		
+		}		
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;		

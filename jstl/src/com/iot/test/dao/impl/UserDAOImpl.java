@@ -60,7 +60,26 @@ public class UserDAOImpl implements UserDAO{
 
 	@Override
 	public UserInfo selectUser(UserInfo ui) {
-		// TODO Auto-generated method stub
+		String sql = "select * from user_info where ciNo=?";
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;		
+		try {
+			con = DBCon.getCon();
+			ps = con.prepareStatement(sql);			
+			ps.setInt(1, ui.getCiNo());				
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				UserInfo ciEqUi = new UserInfo();
+				ciEqUi.setCiNo(rs.getInt("cino"));				
+				return ciEqUi;				
+			}			
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+		finally {
+			DBUtil.closeAll(rs, con, ps);			
+		}				
 		return null;
 	}
 

@@ -11,15 +11,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%
-// String root = request.getContextPath();
-List<ClassInfo> classList = (List<ClassInfo>) request.getAttribute("classList");
-/* String str = (String) request.getAttribute("String");
-if(str == null){
-	str = "";	
-} */
 
-%>
 
 <br>클래스리스트<br>
 
@@ -63,7 +55,26 @@ if(str == null){
 
 
 </body>
+<%
+// String root = request.getContextPath();
+List<ClassInfo> classList = (List<ClassInfo>) request.getAttribute("classList");
+/* String str = (String) request.getAttribute("String");
+if(str == null){
+	str = "";	
+} */
+%>
+
+<%
+String msg = "";
+if(request.getAttribute("msg") != null){
+	msg = (String) request.getAttribute("msg");		
+}
+out.println(msg);
+
+%>
+
 <script>
+
 function checkValue(){
 	var sBox = document.getElementById("searchType").value;
 	if(sBox.length == 0){

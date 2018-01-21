@@ -44,10 +44,6 @@
 	</c:forEach>	
 </table>
 
-<form action="<%=root %>/view/customer/insert">
-	<input type="submit" value="Register">
-</form>
-
 <form action="<%=root %>/view/customer/search" onsubmit="return checkValue()">
 	<select name="searchType" id="searchType">
 		<option value="">선택</option>
@@ -58,6 +54,11 @@
 	</select>
 	<input type="text" id="searchStr" name="searchStr" value="${String}"><input type="submit" value="검색">
 </form>
+
+<form action="<%=root %>/view/customer/insert">
+	<input type="submit" value="Register">
+</form>
+
 </body>
 
 <script>

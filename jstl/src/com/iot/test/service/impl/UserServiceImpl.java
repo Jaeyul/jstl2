@@ -66,12 +66,12 @@ public class UserServiceImpl implements UserService{
 		ui = gs.fromJson(json, UserInfo.class);		
 		int result = udao.insertUser(ui);			
 		
-		Map<String, String> hm = new HashMap<String, String>();
-		hm.put("msg", "회원가입에 실패했습니다.");
+		String msg = "회원가입에 실패했습니다.";
 		if(result != 0) {
-			hm.put("msg", "회원가입되었습니다.");
-		}		
-		req.setAttribute("msg", hm);		
+			msg = "회원가입에 성공했습니다.";			
+		}
+		
+		req.setAttribute("msg", msg);	
 	}
 
 	@Override
@@ -98,17 +98,22 @@ public class UserServiceImpl implements UserService{
 		
 		System.out.println(json);
 		ui = gs.fromJson(json, UserInfo.class);		
-		int result = udao.updateUser(ui);	
+		int result = udao.updateUser(ui);		
 		
+//		Map<String, String> hm = new HashMap<String, String>();
+//		hm.put("msg", "수정에 실패했습니다.");
+//		if(result != 0) {
+//			hm.put("msg", "수정되었습니다.");
+//		}		
+//		req.setAttribute("msg", hm);	
 		
-		
-		Map<String, String> hm = new HashMap<String, String>();
-		hm.put("msg", "수정에 실패했습니다.");
+		String msg = "수정에 실패했습니다.";
 		if(result != 0) {
-			hm.put("msg", "수정되었습니다.");
+			msg = "수정에 성공했습니다.";			
 		}
 		
-		req.setAttribute("msg", hm);		
+		req.setAttribute("msg", msg);
+		
 	}
 
 	@Override
@@ -130,12 +135,12 @@ public class UserServiceImpl implements UserService{
 		System.out.println(json);
 		ui = gs.fromJson(json, UserInfo.class);		
 		int result = udao.deleteUser(ui);			
-		Map<String, String> hm = new HashMap<String, String>();
-		hm.put("msg", "삭제를 실패했습니다.");
+		String msg = "삭제에 실패했습니다.";
 		if(result != 0) {
-			hm.put("msg", "삭제되었습니다.");
-		}		
-		req.setAttribute("msg", hm);		
+			msg = "삭제에 성공했습니다.";			
+		}
+		
+		req.setAttribute("msg", msg);
 		
 	}
 	

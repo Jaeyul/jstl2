@@ -17,13 +17,10 @@
 
 
 
-<body onload="forAlert()">
+<body>
 
 
-<br>유저리스트<br>
-
-
-  	
+<br>유저리스트<br>  	
 <table border='1'>
 	<tr>
 		<th>번호</th>
@@ -54,14 +51,10 @@
 	</form>	
 	</c:forEach>		
 </table>
-
  	
 <form action="<%=root %>/view/user/insert">
 	<input type="submit" value="Sign-up">
 </form>
-
-
-
 
 <form action="<%=root %>/view/user/search" onsubmit="return checkValue()">
 	<select name="searchType" id="searchType">
@@ -87,22 +80,16 @@ if(str == null){
 } */
 
 String msg = "";
-
 if(request.getAttribute("msg") != null){
-	HashMap<String, String> hm = (HashMap<String, String>) request.getAttribute("msg");
-	
-	if(hm != null){
-	msg = hm.get("msg");	
-	}
-	
+	msg = (String) request.getAttribute("msg");		
 }
-
-
+out.println(msg);
 %>
 
 
 
 <script>
+
 function checkValue(){
 	var sBox = document.getElementById("searchType").value;
 	if(sBox.length == 0){

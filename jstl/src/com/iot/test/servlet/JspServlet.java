@@ -62,11 +62,9 @@ public class JspServlet extends HttpServlet {
 		}
 		else if(uri.indexOf("/user/insert")!= -1) {			
 			cs.setClassList(req);			
-		}
-		
+		}		
 		else if(uri.indexOf("/class/list")!= -1) {			
-			cs.setClassList(req);
-			
+			cs.setClassList(req);			
 		}
 		else if(uri.indexOf("/class/search")!= -1) {			
 			cs.setClassList(req);
